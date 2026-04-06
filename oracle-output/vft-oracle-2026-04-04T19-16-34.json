@@ -1,0 +1,10 @@
+{
+  "timestamp": "2026-04-04T19:16:34.405Z",
+  "btc_price_usd": 67417.39,
+  "energy_level": "HIGH",
+  "action": "SUGGEST_CLAIM",
+  "suggested_allowance_vft": 300,
+  "energy_score": 74,
+  "rune_id": "4841932:1",
+  "message": "VFT:$67417 E:HIGH ACT:SUGGEST_CLAIM Allow:300 Score:74 T:2026-04-04"
+}

@@ -1,0 +1,9 @@
+{
+  "timestamp": "2026-04-04T03:24:45.110Z",
+  "btc_price_usd": 66852.93,
+  "energy_level": "MEDIUM",
+  "action": "SUGGEST_MONITOR",
+  "suggested_allowance_vft": 500,
+  "rune_id": "4841932:1",
+  "message": "VFT:$66853 E:MEDIUM ACT:SUGGEST_MONITOR Allow:500 T:2026-04-04"
+}

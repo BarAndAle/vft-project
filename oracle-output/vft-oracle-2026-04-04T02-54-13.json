@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-04-04T02:54:13.445Z",
+  "btc_price_usd": 66817.24,
+  "action": "SUGGEST_MONITOR",
+  "rune_id": "4841932:1",
+  "message": "VFT Oracle: BTC $66817 | Action: SUGGEST_MONITOR | Rune: 4841932:1 | Time: 2026-04-04T02:54:13.445Z",
+  "note": "Energy/price neutral - monitor system."
+}

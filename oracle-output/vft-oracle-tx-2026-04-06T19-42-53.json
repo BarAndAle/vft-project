@@ -1,0 +1,33 @@
+{
+  "version": 2,
+  "locktime": 0,
+  "inputs": [
+    {
+      "txid": "8823acfe343942038b1544c459e251c42ecb16c63fd7addb68dc92650cd714c8",
+      "vout": 1,
+      "satoshis": 800,
+      "address": "tb1qet6rveaxx6655felxl6cgaltfsf27p5m7s8g03",
+      "sequence": 4294967295
+    }
+  ],
+  "outputs": [
+    {
+      "index": 0,
+      "type": "OP_RETURN",
+      "data": "VFT:$67417 E:HIGH EP:74 ACT:SUGGEST_CLAIM Allow:185 T:2026-04-06 NewDay",
+      "satoshis": 0,
+      "script": "6a5646543a24363734313720453a484947482045503a3734204143543a535547474553545f434c41494d20416c6c6f773a31383520543a323032362d30342d3036204e6577446179"
+    },
+    {
+      "index": 1,
+      "type": "change",
+      "address": "tb1qet6rveaxx6655felxl6cgaltfsf27p5m7s8g03",
+      "satoshis": 600
+    }
+  ],
+  "totalInput": 800,
+  "totalOutput": 600,
+  "fee": 200,
+  "messageLength": 71,
+  "messageHex": "5646543a24363734313720453a484947482045503a3734204143543a535547474553545f434c41494d20416c6c6f773a31383520543a323032362d30342d3036204e6577446179"
+}
