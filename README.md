@@ -1,16 +1,41 @@
-# VFT Oracle Prototype
+VFT Oracle Prototype - Now Open Source on GitHub
 
-Energy-backed Oracle for Vegas Fun Token (VFT) on Bitcoin Testnet3.
+The Vegas Fun Token (VFT) Oracle is complete and ready for collaborative development.
 
-## Overview
-The VFT Oracle generates daily allowances based on an Energy Production Score (0-100), enabling a closed-loop system where energy → VFT allowances → merchant reimbursement → allowances recirculate.
+WHAT IT DOES:
+- Generates daily energy-backed allowances using an Energy Production Score (0-100)
+- Implements NewDay claim logic with dynamic VFT suggestions
+- Simulates closed-loop merchant reimbursement on Bitcoin Testnet3
+- Creates OP_RETURN messages ready for inscription on the VFT Rune
 
-## Quick Start
+TECHNICAL DETAILS:
+- Rune ID: 4841932:1 on Bitcoin Testnet3
+- Built with Node.js (vft-oracle.cjs)
+- PSBT generation for transaction creation and signing
+- All outputs for manual review (testnet only)
 
-### Prerequisites
-- Node.js v18+
-- Bitcoin Testnet3 wallet (Sparrow Wallet recommended)
+KEY FEATURES:
+- Energy-backed (no fiat) — value derived from simulated energy production
+- Fiat-free closed loop — Energy → VFT allowances → merchants → recirculation
+- Bitcoin native — Built on Runes with potential for Ordinals (Vegas-themed NFTs)
+- Transparent — Full documentation and project status included
 
-### Installation
-```bash
-npm install
+OPEN FOR COLLABORATION:
+We're seeking contributors in these areas:
+- Real energy data integration (renewable APIs, mining pool data)
+- Merchant onboarding UI and claim interfaces
+- Mainnet migration planning and security audit
+- Mobile app or wallet integration
+
+GITHUB REPOSITORY:
+https://github.com/BarAndAle/vft-project
+
+Get started:
+1. Clone the repo
+2. Run: npm install && node vft-oracle.cjs
+3. Review project_status.md for full technical details
+4. Open an issue or submit a PR with improvements
+
+Testnet only. All rights reserved for testnet demonstration.
+
+#VFT #Bitcoin #Runes #Energy #Oracle #OpenSource
