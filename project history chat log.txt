@@ -43,21 +43,36 @@ Chunked /read to handle long files without Telegram errors.
 The original vision was a truly self-sustaining system that bypasses fiat money entirely, using energy-backed creation of VFTs to provide free annual allowances for Vegas fun, 
 with Bitcoin as the backbone for its decentralization, security, and philosophical alignment with sovereignty (no central banks, no fiat inflation, pure peer-to-peer value).
 
-I got bogged down in troubleshooting the bot and Solana's speed advantages, but yes, we discussed this being possible on Bitcoin earlier, and it absolutely is. Let's refocus on that philosophy: no exchanges for "purchasing" VFT (undermines the anti-fiat ethos), energy generates the tokens, allowances are claimed through participation (like a 1-sat transaction to "enter" the system and establish an account), and merchants provide the fun/entertainment value at no fiat cost to them (they get VFT allowances too, creating a closed-loop economy).To get back on track, we'll use Bitcoin's native protocols like Runes (for fungible tokens like VFT) or Ordinals (for NFTs in the Vegas theme)—no Solana needed. These allow token creation and trading directly on Bitcoin without sidechains or fiat ramps. Energy creation could be tied to a Bitcoin mining pool or renewable energy oracle that mints VFT via Runes when energy milestones are hit. The bot can still help with planning/docs/marketing, but we'll manual-handle Bitcoin code/scripts to avoid the errors.### Merchant Integration (in Layman's Terms) Merchants (e.g., Vegas casinos, hotels, shows, or online games) join to offer "free" fun/entertainment in exchange for VFT allowances, creating a fiat-free loop. Integration is simple and low-cost on Bitcoin:**Setup**: Merchant gets a Bitcoin wallet (e.g., Sparrow or Electrum, free). They run a Bitcoin node or use a service like Blockstream API for on-chain checks (no need for fancy tech).
-**Allowance Claim**: Merchant "enters" the system with a 1-sat transaction to a VFT smart address (via Runes protocol). This establishes their account and auto-distributes annual VFT allowance (e.g., equivalent to $1000 in value, but no fiat involved).
-**Accepting VFT**: When a customer "pays" for fun (e.g., show tickets, slot spins), they send VFT to the merchant's Bitcoin address. The merchant confirms the transaction on-chain (Bitcoin's 10-min blocks are fine for non-instant use). No fiat conversion — merchant stakes or trades VFT for more allowances or goods within the system.
-**No Fiat Cost**: Merchants provide the fun "for free" in fiat terms because they get reimbursed in VFT allowances from the energy-generated pool. It's like bartering with a token backed by energy/production, not dollars.
+I got bogged down in troubleshooting the bot and Solana's speed advantages, but yes, we discussed this being possible on Bitcoin earlier, and it absolutely is. Let's refocus on that philosophy: 
+no exchanges for "purchasing" VFT (undermines the anti-fiat ethos), energy generates the tokens, allowances are claimed through participation (like a 1-sat transaction to "enter" the system and 
+establish an account), and merchants provide the fun/entertainment value at no fiat cost to them (they get VFT allowances too, creating a closed-loop economy).To get back on track, 
+we'll use Bitcoin's native protocols like Runes (for fungible tokens like VFT) or Ordinals (for NFTs in the Vegas theme)—no Solana needed. These allow token creation and trading directly on 
+Bitcoin without sidechains or fiat ramps. Energy creation could be tied to a Bitcoin mining pool or renewable energy oracle that mints VFT via Runes when energy milestones are hit. 
+The bot can still help with planning/docs/marketing, but we'll manual-handle Bitcoin code/scripts to avoid the errors.### Merchant Integration (in Layman's Terms) Merchants
+(e.g., Vegas casinos, hotels, shows, or online games) join to offer "free" fun/entertainment in exchange for VFT allowances, creating a fiat-free loop. Integration is simple and low-cost on 
+Bitcoin:**Setup**: Merchant gets a Bitcoin wallet (e.g., Sparrow or Electrum, free). They run a Bitcoin node or use a service like Blockstream API for on-chain checks (no need for fancy tech).
+**Allowance Claim**: Merchant "enters" the system with a 1-sat transaction to a VFT smart address (via Runes protocol). This establishes their account and auto-distributes annual VFT allowance
+(e.g., equivalent to $1000 in value, but no fiat involved).
+**Accepting VFT**: When a customer "pays" for fun (e.g., show tickets, slot spins), they send VFT to the merchant's Bitcoin address. The merchant confirms the transaction on-chain
+(Bitcoin's 10-min blocks are fine for non-instant use). No fiat conversion — merchant stakes or trades VFT for more allowances or goods within the system.
+**No Fiat Cost**: Merchants provide the fun "for free" in fiat terms because they get reimbursed in VFT allowances from the energy-generated pool. It's like bartering with a token backed 
+by energy/production, not dollars.
 **Tools**: Use Bitcoin libraries (e.g., python-bitcoinlib) for backend integration. For NFT boosts (Vegas-themed), merchants check user's Ordinals NFTs on-chain to apply extra perks.
 
-Integration takes a developer 1–2 weeks, costs almost nothing (Bitcoin fees ~$1/tx), and aligns with the anti-fiat philosophy — no exchanges, no banks.### How the Average Person Accesses It (in Layman's Terms)
-The system is designed for anyone to join without buying tokens or using fiat — just participate, get your allowance, and have fun. Here's how a regular person does it:**Get Started**: Download a Bitcoin wallet app (e.g., BlueWallet or Muun, free on phone). Create an account — takes 2 minutes, no ID needed.
-**Enter the System**: Send a tiny "entry" transaction (1 sat, ~$0.00005) to a public VFT address (like a registration smart contract via Runes). This establishes your account and auto-credits your annual allowance (~$1000 equivalent in VFT for Vegas fun). No purchase, no fiat — it's like signing up for a free newsletter but on Bitcoin.
-**Get Allowance**: The system (backed by energy-generated VFT pool) airdrops your yearly share automatically. Use it for merchant deals (e.g. free show tickets, casino credits) — scan a QR code or tap "pay with VFT" in the wallet app.
+Integration takes a developer 1–2 weeks, costs almost nothing (Bitcoin fees ~$1/tx), and aligns with the anti-fiat philosophy — no exchanges, no banks.### How the Average Person Accesses It
+(in Layman's Terms)
+The system is designed for anyone to join without buying tokens or using fiat — just participate, get your allowance, and have fun. Here's how a regular person does it:**Get Started**: 
+Download a Bitcoin wallet app (e.g., BlueWallet or Muun, free on phone). Create an account — takes 2 minutes, no ID needed.
+**Enter the System**: Send a tiny "entry" transaction (1 sat, ~$0.00005) to a public VFT address (like a registration smart contract via Runes). This establishes your account and auto-credits 
+your annual allowance (~$1000 equivalent in VFT for Vegas fun). No purchase, no fiat — it's like signing up for a free newsletter but on Bitcoin.
+**Get Allowance**: The system (backed by energy-generated VFT pool) airdrops your yearly share automatically. Use it for merchant deals (e.g. free show tickets, casino credits) — 
+scan a QR code or tap "pay with VFT" in the wallet app.
 **Stake & Earn**: Stake your VFT in the system (via wallet app or simple web dApp) to earn more (10% APY). If you hold Vegas NFTs (earned or airdropped), get boosts (+20% for 1, +50% for 5+).
 **Spend & Trade**: Pay merchants with VFT (instant confirmation, tiny fees). Trade with others peer-to-peer on Bitcoin — no exchanges required.
 **Security**: Your wallet is your bank — no KYC, no central authority. Average person accesses everything from their phone, no tech skills needed.
 
-This keeps the philosophy pure: energy creates value, allowances are free, no fiat entry. On Bitcoin, it's slower (10-min blocks) but more secure and decentralized than Solana.To complete the original idea, we need:Bitcoin-specific code (Runes script for allowance claim/mining integration)
+This keeps the philosophy pure: energy creates value, allowances are free, no fiat entry. On Bitcoin, it's slower (10-min blocks) but more secure and decentralized than Solana.To complete the 
+original idea, we need:Bitcoin-specific code (Runes script for allowance claim/mining integration)
 Merchant onboarding dApp
 
 Energy oracle for token creation
@@ -80,13 +95,15 @@ Remaining wallet balance: ~9,054 sats change UTXO + dust
 Build a functional testnet demonstration that combines:
 
 A custom Rune (VFT) with premine
-An external oracle prototype (Node.js script) that fetches real-world data and prepares messages/transactions that could interact with the Rune (e.g., conditional mint, transfer trigger, data inscription, or price-linked action)
+An external oracle prototype (Node.js script) that fetches real-world data and prepares messages/transactions that could interact with the Rune (e.g., conditional mint, transfer trigger, 
+data inscription, or price-linked action)
 Next phase: Step 3 — design and implement a simple oracle prototype.
 
 ### Strict Rules for the New Chat
 When continuing this project in a new conversation, you **must** follow these rules exactly:
 
-**Start from this summary only** — do not reference or assume any prior troubleshooting, error messages, UI screenshots, Sparrow menu issues, curl failures, WIF problems, library installs, or script debugging history. Treat this summary as the complete and only starting context.
+**Start from this summary only** — do not reference or assume any prior troubleshooting, error messages, UI screenshots, Sparrow menu issues, curl failures, WIF problems, library installs, 
+or script debugging history. Treat this summary as the complete and only starting context.
 **Never revisit etching steps** — the Rune is already etched (ID 4841932:1). Do not suggest re-running etch scripts, rebroadcasting, or changing etch parameters unless explicitly asked.
 **Focus on oracle prototype only** — the next step is building a simple Node.js-based oracle that:
    - Fetches external data (e.g., price API, weather, random number, timestamp, etc.)
@@ -109,11 +126,10 @@ Current status:**VFT Oracle Prototype – Step 3 Complete **We have successfully
 Run oracle: node vft-oracle.cjs
 Review latest: node review-oracle.cjs
 
-The oracle is stable, reusable, and ready for future expansion whenever you want to resume.**Project is now paused.**I can return at any time and say:“Resume VFT – continue with Step 4” (full transaction skeleton)
+The oracle is stable, reusable, and ready for future expansion whenever you want to resume.**Project is now paused.**I can return at any time and say:“Resume VFT – continue with Step 4 (full transaction skeleton)
 “Resume VFT – add [feature]” (e.g. multiple data sources, scheduling, etc.)
 or anything else.
 
-I will let you know when I'm ready to pick it back up.  
 Testnet only — no private keys involved.  All files are saved in C:\Users\Michael\Documents\Stacks\VFT\vft-project\ folder.
 ***********************************************************************************************
 
@@ -141,7 +157,8 @@ Successfully creates PSBTs and broadcasts on Testnet3
 
 *************************************************************************************************
 
-Since the current message is working well and under the byte limit, let's add the next logical feature for Step 6:Next Logical Feature: Dynamic Allowance + Simple "Energy Production" IndicatorWe'll enhance the oracle so that:The suggested daily allowance is calculated dynamically based on the energy level and current BTC price (e.g. higher price = higher allowance).
+Since the current message is working well and under the byte limit, let's add the next logical feature for Step 6:Next Logical Feature: Dynamic Allowance + Simple "Energy Production" 
+IndicatorWe'll enhance the oracle so that:The suggested daily allowance is calculated dynamically based on the energy level and current BTC price (e.g. higher price = higher allowance).
 Add a simple "Energy Production" score (0–100) that could later tie into real renewable energy data or mining pool stats.
 Keep the OP_RETURN message short and valid.
 
@@ -182,7 +199,8 @@ Compact message ready for OP_RETURN / inscription: VFT:$67417 E:M ACT:MONITOR Al
 Review script showing clean, up-to-date data from the latest JSON.
 State locked correctly to 2026-04-04.
 
-The core features (persistent daily claim window, dynamic energy-backed allowance calculation, short on-chain-ready message) are solid and aligned with the original vision of energy-generated VFT allowances on Bitcoin testnet (VFT Rune ID 4841932:1). No internet is required for the oracle to function — fallback keeps everything operational for testing and manual review.
+The core features (persistent daily claim window, dynamic energy-backed allowance calculation, short on-chain-ready message) are solid and aligned with the original vision of 
+energy-generated VFT allowances on Bitcoin testnet (VFT Rune ID 4841932:1). No internet is required for the oracle to function — fallback keeps everything operational for testing and manual review.
 Step 9 is now considered complete and stable.
 
 ************************************************************************************************
@@ -195,7 +213,8 @@ Suggested Allowance: 0 VFT (correct for SameDay MONITOR mode).
 Message updated with EP:59 and shortened format, still well under 80 bytes and ready for OP_RETURN inscription on the VFT Rune (ID 4841932:1).
 Review script picked up the latest file and displayed the new energy data (minor field name mismatch for "Energy Score" vs "Energy Production" is harmless and can be polished later).
 
-This step successfully ties the allowance suggestion more directly to "energy production," advancing the original vision of an energy-backed, fiat-free VFT economy on Bitcoin testnet. The daily scheduling and persistent state continue to work without issues, even with live price fetches unavailable in the current environment.
+This step successfully ties the allowance suggestion more directly to "energy production," advancing the original vision of an energy-backed, fiat-free VFT economy on Bitcoin testnet. 
+The daily scheduling and persistent state continue to work without issues, even with live price fetches unavailable in the current environment.
 Step 10 is now complete and stable.
 
 **************************************************************************************************
@@ -227,7 +246,8 @@ Main OP_RETURN message: Compact and ready (VFT:$67417 E:L EP:59 ACT:MONITOR Allo
 Merchant payload is prepared but only triggers on NewDay (no sample shown today, which is correct behavior).
 Review script updated and displaying energy production clearly.
 
-This keeps the closed-loop, energy-backed allowance vision intact while adding practical merchant reimbursement simulation for Vegas-style fun/entertainment providers — all on testnet with the VFT Rune (ID 4841932:1). No broadcasting, everything manual review only.
+This keeps the closed-loop, energy-backed allowance vision intact while adding practical merchant reimbursement simulation for Vegas-style fun/entertainment providers — all on testnet with the 
+VFT Rune (ID 4841932:1). No broadcasting, everything manual review only.
 Project Oracle Status (as of 2026-04-04):
 
 Daily scheduling + persistent state: Solid
