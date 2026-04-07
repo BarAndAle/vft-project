@@ -32,7 +32,7 @@ https://github.com/BarAndAle/vft-project
 
 Get started:
 1. Clone the repo
-2. Run: npm install && node vft-oracle.cjs
+2. Run: npm install & node vft-oracle.cjs
 3. Review project_status.md for full technical details
 4. Open an issue or submit a PR with improvements
 
