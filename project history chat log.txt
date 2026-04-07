@@ -1,12 +1,14 @@
 ### What We've Built So Far for Vegas Fun Token
 
-The original idea was to create a fun, casino-themed cryptocurrency called Vegas Fun Token (VFT) on the Solana blockchain. It's a mix of meme coin vibe and real utility, like staking to earn rewards, using NFTs to boost those rewards, a small burn on transfers to keep supply tight, and eventual casino-style features. We've been building this through a Telegram bot (@OpenVegasBot) that acts as your development agent, handling files, code, and ideas.Here's what we have right now:**The Bot Itself (@OpenVegasBot)**  This is the core tool: a Python script running locally on your machine, connected to Telegram and Ollama for AI smarts.
+The original idea was to create a fun, casino-themed cryptocurrency called Vegas Fun Token (VFT) on the Solana blockchain. It's a mix of meme coin vibe and real utility, like staking to earn rewards, 
+using NFTs to boost those rewards, a small burn on transfers to keep supply tight, and eventual casino-style features. We've been building this through a Telegram bot (@OpenVegasBot) that acts as your development agent, handling files, code, and ideas.Here's what we have right now:**The Bot Itself (@OpenVegasBot)**  This is the core tool: a Python script running locally on your machine, connected to Telegram and Ollama for AI smarts.
 It can create, read, update, append, and delete files in a safe "sandbox" folder.
 Commands like /read, /write, /delete work well for small files.
 It uses AI (Llama or Qwen models) to generate content, but we've learned it's great for short stuff (like marketing copy) and less reliable for long code.
 We've debugged it a lot — added chunked reading to handle big files without Telegram errors.
 
-**Tokenomics Document (tokenomics.md)**  A full plan for VFT's economy: overview, total supply (1 billion fixed), distribution (community airdrops, liquidity, team vested), vesting (12 months linear), utilities (staking for rewards, Vegas-themed NFTs, in-game casino), improvements (burn mechanism, DAO), risks/mitigations.
+**Tokenomics Document (tokenomics.md)**  A full plan for VFT's economy: overview, total supply (1 billion fixed), distribution (community airdrops, liquidity, team vested), vesting (12 months linear),
+utilities (staking for rewards, Vegas-themed NFTs, in-game casino), improvements (burn mechanism, DAO), risks/mitigations.
 Updated to mention Solana switch for faster/cheaper transactions.
 
 **Branding Document (branding.md)**  5 Vegas-themed name ideas (e.g. SinCityCoin, NeonToken).
