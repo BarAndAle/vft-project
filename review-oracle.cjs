@@ -1,51 +1,57 @@
-// review-oracle.cjs - Updated for Step 12+ (prefers main output, handles tx skeletons)
+// review-oracle.cjs
 const fs = require('fs');
 const path = require('path');
 
-const OUTPUT_DIR = path.join(__dirname, 'oracle-output');
-const STATE_FILE = path.join(__dirname, 'oracle-state.json');
+const OUTPUT_DIR = 'oracle-output';
+const STATE_FILE = 'oracle-state.json';
 
-// Get all files, prefer main oracle json over tx skeletons
-let files = fs.readdirSync(OUTPUT_DIR)
-  .filter(f => f.startsWith('vft-oracle-') && f.endsWith('.json') && !f.includes('tx-'))
-  .map(f => {
-    const fullPath = path.join(OUTPUT_DIR, f);
-    const stats = fs.statSync(fullPath);
-    return { name: f, path: fullPath, mtime: stats.mtime };
-  })
-  .sort((a, b) => b.mtime - a.mtime);
-
-if (files.length === 0) {
-  // fallback to any file if no main output
-  files = fs.readdirSync(OUTPUT_DIR)
-    .filter(f => f.startsWith('vft-oracle-') && f.endsWith('.json'))
-    .map(f => {
-      const fullPath = path.join(OUTPUT_DIR, f);
-      const stats = fs.statSync(fullPath);
-      return { name: f, path: fullPath, mtime: stats.mtime };
-    })
-    .sort((a, b) => b.mtime - a.mtime);
-}
-
-const latest = files[0];
-const data = JSON.parse(fs.readFileSync(latest.path, 'utf8'));
-
-let state = { lastRunDate: 'None' };
-if (fs.existsSync(STATE_FILE)) {
-  try { state = JSON.parse(fs.readFileSync(STATE_FILE, 'utf8')); } catch (e) {}
-}
-
-console.log('📋 VFT Oracle Review (Updated for Merchant + Energy)');
+console.log('📋 VFT Oracle Review (Finished Prototype)');
 console.log('==================================================');
-console.log(`Latest File: ${latest.name}`);
-console.log(`Run Time: ${data.timestamp || 'N/A'}`);
-console.log(`BTC Price: $${data.btcPrice || 'N/A'} (fallback)`);
-console.log(`Energy Production Score: ${(data.energyProduction || 'N/A')}/100 (${data.energyLevel || 'N/A'})`);
-console.log(`Suggested Allowance: ${(data.suggestedAllowance || 0)} VFT`);
-console.log(`Action: ${data.action || 'N/A'}`);
-console.log(`New Day?: ${data.isNewDay === true ? 'YES → Claim Suggested' : 'NO → Monitor Only'}`);
-console.log(`OP_RETURN Message: ${data.message || 'N/A'}`);
-if (data.merchantPayload) console.log(`Merchant Payload: ${JSON.stringify(data.merchantPayload)}`);
-console.log(`Rune ID: ${data.runeId || '4841932:1'}`);
-console.log(`\nState → Last Run Date: ${state.lastRunDate || 'None'}`);
-console.log('\n✅ Review complete. Testnet only.');
+
+try {
+  const files = fs.readdirSync(OUTPUT_DIR)
+    .filter(f => f.startsWith('vft-oracle-') && f.endsWith('.json'))
+    .sort((a, b) => b.localeCompare(a));
+
+  // Prefer rich data file (no -tx-)
+  let dataFile = files.find(f => !f.includes('-tx-'));
+  if (!dataFile) dataFile = files[0];
+
+  const latestFile = path.join(OUTPUT_DIR, dataFile);
+  console.log(`Latest File: ${dataFile}`);
+  const data = JSON.parse(fs.readFileSync(latestFile, 'utf8'));
+
+  console.log(`Run Time: ${data.runTime || 'N/A'}`);
+  console.log(`BTC Price: ${data.btcPrice || '$67417 (fallback)'}`);
+  console.log(`Energy Production Score: ${data.energyProductionScore || 'N/A'}/100 (${data.energyLevel || 'N/A'})`);
+  console.log(`Suggested Allowance: ${data.suggestedAllowance || 0} VFT`);
+  console.log(`Action: ${data.action || 'MONITOR'}`);
+  console.log(`New Day?: ${data.isNewDay ? 'YES → Claim Suggested' : 'NO → MONITOR'}`);
+
+  console.log(`OP_RETURN Message: ${data.opReturnMessage || 'N/A'}`);
+
+  if (data.merchantPayload) {
+    const mp = data.merchantPayload;
+    console.log(`Merchant Distribution: ${mp.totalDistributed} VFT to ${mp.recipients} recipients`);
+    console.log(`Per recipient: ${mp.perRecipient} VFT`);
+    if (mp.merchants) {
+      console.log('Merchants:');
+      mp.merchants.forEach(m => {
+        console.log(`  - ${m.note}: ${m.amount} VFT → ${m.address}`);
+      });
+    }
+  }
+
+  console.log(`Rune ID: 4841932:1`);
+
+} catch (err) {
+  console.error('❌ Error:', err.message);
+}
+
+if (fs.existsSync(STATE_FILE)) {
+  const state = JSON.parse(fs.readFileSync(STATE_FILE, 'utf8'));
+  console.log(`State → Last Run Date: ${state.lastRunDate || 'N/A'}`);
+}
+
+console.log('');
+console.log('✅ Testnet only. Manual review. No broadcasting.');

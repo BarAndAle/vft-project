@@ -1,6 +1,5 @@
 // vft-oracle.cjs
-// VFT Oracle - Finished Prototype (Step 18)
-// Energy-backed daily allowances + merchant reimbursement simulation
+// VFT Oracle - Finished Prototype with Merchant PSBT Outputs
 // Testnet only - no broadcasting
 
 const fs = require('fs');
@@ -12,7 +11,7 @@ const STATE_FILE = 'oracle-state.json';
 // Ensure output directory exists
 if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR);
 
-// Sample testnet merchant addresses (for closed-loop demo only)
+// Sample testnet merchant addresses (Vegas-themed for closed-loop demo)
 const SAMPLE_MERCHANTS = [
   { id: 1, address: 'tb1qet6rveaxx6655felxl6cgaltfsf27p5m7s8g03', note: 'Casino Floor' },
   { id: 2, address: 'tb1q5f2v3w4x5y6z7a8b9c0d1e2f3g4h5i6j7k8l9m', note: 'Show Tickets' },
@@ -33,74 +32,92 @@ if (fs.existsSync(STATE_FILE)) {
 const today = new Date().toISOString().split('T')[0];
 const isNewDay = state.lastRunDate !== today;
 
-// Simulated data (fallback mode - live price unavailable)
-const btcPrice = 67417; // fallback
-const energyProductionScore = Math.floor(60 + Math.random() * 40); // 60-99 for demo
+// Simulated data
+const btcPrice = 67417;
+const energyProductionScore = Math.floor(60 + Math.random() * 40); // 60-99
 const energyLevel = energyProductionScore >= 70 ? 'HIGH' : energyProductionScore >= 40 ? 'MEDIUM' : 'LOW';
 
-// Dynamic allowance (only on NewDay)
 let suggestedAllowance = 0;
 let action = 'MONITOR';
 let merchantPayload = null;
 
 if (isNewDay) {
-  suggestedAllowance = Math.floor(energyProductionScore * 2.5); // energy-backed formula
+  suggestedAllowance = Math.floor(energyProductionScore * 2.5);
   action = 'SUGGEST_CLAIM';
-  
-  // Merchant distribution (total = allowance × 10 for demo scale)
+
   const totalDistributed = suggestedAllowance * 10;
+  const perRecipient = Math.floor(totalDistributed / SAMPLE_MERCHANTS.length);
+
   merchantPayload = {
     date: today,
     totalDistributed,
     recipients: SAMPLE_MERCHANTS.length,
-    perRecipient: Math.floor(totalDistributed / SAMPLE_MERCHANTS.length),
+    perRecipient,
     merchants: SAMPLE_MERCHANTS.map(m => ({
       ...m,
-      amount: Math.floor(totalDistributed / SAMPLE_MERCHANTS.length)
+      amount: perRecipient
     })),
     note: 'Reimbursement for fun/entertainment services - closed-loop VFT economy'
   };
 }
 
-// Build compact OP_RETURN message
+// Compact OP_RETURN message
 const opReturnMessage = `VFT:$${btcPrice} E:${energyLevel} EP:${energyProductionScore} ACT:${action} Allow:${suggestedAllowance} T:${today}${isNewDay ? ' NewDay' : ' SameDay'}`;
 
-// Prepare transaction skeleton (for manual review only)
+// Build enhanced PSBT skeleton with merchant outputs on NewDay
+const outputs = [{
+  index: 0,
+  type: 'OP_RETURN',
+  data: opReturnMessage,
+  satoshis: 0
+}];
+
+// Add merchant outputs only on NewDay (each gets dust + amount in sats for demo)
+if (isNewDay && merchantPayload) {
+  merchantPayload.merchants.forEach((merchant, idx) => {
+    outputs.push({
+      index: idx + 1,
+      type: 'merchant',
+      address: merchant.address,
+      satoshis: 546, // dust
+      note: `${merchant.note} - ${merchant.amount} VFT`,
+      vftAmount: merchant.amount
+    });
+  });
+}
+
+// Change output (last)
+outputs.push({
+  index: outputs.length,
+  type: 'change',
+  address: 'tb1qet6rveaxx6655felxl6cgaltfsf27p5m7s8g03',
+  satoshis: 800 - (outputs.length * 546) // rough fee adjustment
+});
+
 const txSkeleton = {
   version: 2,
   locktime: 0,
   inputs: [{
-    txid: '8823acfe343942038b1544c459e251c42ecb16c63fd7addb68dc92650cd714c8', // your dust UTXO
+    txid: '8823acfe343942038b1544c459e251c42ecb16c63fd7addb68dc92650cd714c8',
     vout: 1,
     satoshis: 800,
     address: 'tb1qet6rveaxx6655felxl6cgaltfsf27p5m7s8g03',
     sequence: 4294967295
   }],
-  outputs: [{
-    index: 0,
-    type: 'OP_RETURN',
-    data: opReturnMessage,
-    satoshis: 0,
-    script: Buffer.from(opReturnMessage, 'utf8').toString('hex') // simplified for demo
-  }, {
-    index: 1,
-    type: 'change',
-    address: 'tb1qet6rveaxx6655felxl6cgaltfsf27p5m7s8g03',
-    satoshis: 600
-  }],
+  outputs,
   totalInput: 800,
-  totalOutput: 600,
+  totalOutput: outputs.reduce((sum, o) => sum + (o.satoshis || 0), 0),
   fee: 200,
   messageLength: opReturnMessage.length,
   messageHex: Buffer.from(opReturnMessage, 'utf8').toString('hex')
 };
 
-// Save outputs
+// Save rich data file + tx skeleton
 const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
 const dataFile = `vft-oracle-${timestamp}.json`;
 const txFile = `vft-oracle-tx-${timestamp}.json`;
 
-fs.writeFileSync(path.join(OUTPUT_DIR, dataFile), JSON.stringify({
+const richData = {
   runTime: new Date().toISOString(),
   btcPrice: `$${btcPrice} (fallback)`,
   energyProductionScore,
@@ -110,22 +127,23 @@ fs.writeFileSync(path.join(OUTPUT_DIR, dataFile), JSON.stringify({
   isNewDay,
   opReturnMessage,
   merchantPayload
-}, null, 2));
+};
 
+fs.writeFileSync(path.join(OUTPUT_DIR, dataFile), JSON.stringify(richData, null, 2));
 fs.writeFileSync(path.join(OUTPUT_DIR, txFile), JSON.stringify(txSkeleton, null, 2));
 
 // Update state
 state.lastRunDate = today;
 fs.writeFileSync(STATE_FILE, JSON.stringify(state, null, 2));
 
-console.log('✅ VFT Oracle Run Complete (Finished Prototype - Step 18)');
-console.log(`Run Time: ${new Date().toISOString()}`);
+console.log('✅ VFT Oracle Run Complete (with Merchant PSBT Outputs)');
+console.log(`Date: ${today} | NewDay: ${isNewDay}`);
 console.log(`Action: ${action} | Allowance: ${suggestedAllowance} VFT`);
-console.log(`Energy Production: ${energyProductionScore}/100 (${energyLevel})`);
+console.log(`Energy: ${energyProductionScore}/100 (${energyLevel})`);
 if (merchantPayload) {
   console.log(`Merchant Distribution: ${merchantPayload.totalDistributed} VFT to ${merchantPayload.recipients} recipients`);
 }
 console.log(`OP_RETURN: ${opReturnMessage}`);
-console.log(`Files saved → ${dataFile} and ${txFile}`);
-console.log('📋 Review with: node status-summary.cjs');
+console.log(`Files: ${dataFile} and ${txFile}`);
+console.log('📋 Review: node status-summary.cjs');
 console.log('Testnet only. Manual review. No broadcasting.');

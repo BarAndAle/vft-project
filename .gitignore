@@ -1,5 +1,13 @@
+# Dependencies
 node_modules/
-.env
-*.log
+
+# Output logs (large folder)
+oracle-output/
+
+# OS files
 .DS_Store
-oracle-state.json
+Thumbs.db
+
+# Temporary / sensitive
+*.log
+oracle-state.json   # optional - you can include it if you want initial state
