@@ -1,8 +1,0 @@
-{
-  "timestamp": "2026-04-04T03:06:48.104Z",
-  "btc_price_usd": 66879.06,
-  "action": "SUGGEST_MONITOR",
-  "rune_id": "4841932:1",
-  "message": "VFT:BTC$66879 ACT:SUGGEST_MONITOR Rune:4841932:1 T:2026-04-04",
-  "note": "Energy/price neutral - monitor system."
-}
